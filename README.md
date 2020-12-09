@@ -123,7 +123,7 @@ RUN python3.8 -m pip install --no-cache-dir jupyter_http_over_ws ipykernel==5.1.
 The dockerfile is ALL SET! When you build the image, run `docker build` command in the same directory with `bashrc`, `readme-for-jupyter.md`, since dockerfile is trying to copy these files while building.
 
 ```bash
-docker build -f ./dockerfiles/gpu-jupyter.Dockerfile -t nia:initial .
+docker build -f ./dockerfiles/gpu-jupyter-cuda11.1.Dockerfile -t image-name:tag-name .
 ```
 
 ## Run the Docker Container
@@ -136,7 +136,7 @@ sudo docker run --rm \
 		-v ~/notebooks:/tf/notebooks \
 		--gpus all \
 		--shm-size=32gb \
-		-p 9999:8888 nia:initial
+		-p 9999:8888 image-name:tag-name
 ```
 
 - `--rm`: automatically remove the container file after it is stopped
@@ -144,4 +144,4 @@ sudo docker run --rm \
 - `-v ~/notebooks:/tf/notebooks`: setting volumes for your docker container. With this option, any changes you made in `/tf/notebooks` in your docker container will be simultaneously synchronized with `~/notebooks` in your local machine
 - `--shm-size`: setting shared memory size for docker container. This is important for docker container to use enough memory space. If this option is not specified, default shared memory size is 64MB.
 - `-p`: setting port to access your jupyter notebook. with `9999:8888`, your jupyter notebook will run in port 8888 in your workstation, and you can access to the notebook through the link `localhost:9999`, if tunneling is well enabled.
-- `nia:initial`: the name:tag of the image you might want to run.
+- `image-name:tag-name`: the name:tag of the image you might want to run.
